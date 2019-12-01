@@ -1,0 +1,73 @@
+#ifndef QUEUE_H
+#include "Node.h"
+#define QUEUE_H
+class Queue {
+private:
+    Node *head;
+    Node *last;
+    int length;
+public:
+
+    Queue() {
+        this->head = this->last = nullptr;
+        this->length = 0;
+    }
+
+    bool isEmpty() {
+        return this->head == nullptr;
+    }
+
+    void push(Node *node) {
+        if (!this->isEmpty()) {
+            last->setNext(node);
+            node->setPrevious(last);
+            last = node;
+        } else {
+            head = last = node;
+        }
+        length++;
+    }
+
+    void *pop() {
+        if (!this->isEmpty()) {
+            Node *aux = this->head;
+            if (this->last == this->head) {
+                this->head = this->last = nullptr;
+            } else {
+                this->head = this->head->getNext();
+            }
+            length--;
+            delete aux;
+        }
+        return nullptr;
+    }
+
+    void printQueue(){
+        if(!this->isEmpty()){
+            Node* aux = this->head;
+            cout << "Cabeza" << endl;
+            while(aux){
+                cout << "Dato: " << aux->getData() << endl;
+                aux = aux->getNext();
+            }
+            cout << "Cola" << endl;
+        } else {
+            cout << "No hay nada en cola" << endl;
+        }
+    }
+
+    Node *getHead() {
+        return this->head;
+    }
+
+    Node *getLast() {
+        return this->last;
+    }
+
+    int getLength() {
+        return this->length;
+    }
+
+};
+
+#endif
